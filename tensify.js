@@ -1,3 +1,8 @@
+// Import XRegExp
+var imported = document.createElement('script');
+imported.src = 'xregexp.js';
+document.head.appendChild(imported);
+
 // Dictionary of words
 // array[0] == Present tense
 // array[1] == Past tense
