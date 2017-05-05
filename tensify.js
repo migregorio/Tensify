@@ -225,13 +225,15 @@ var verbs = [
 
     // Linking Verbs
     [/ am(?=[ .])/g, "was"],
-    [/ appear?s(?=[ .])/g, "appeared"],
+    [/ appears?(?=[ .])/g, "appeared"],
     [/ are(?=[ .])/g, "were"],
+    [/ being(?=[ .])/g, "having been"],
+    [/ has(?=[ .])/g, "had"],
     [/ is(?=[ .])/g, "was"],
-    [/ look?s(?=[ .])/g, "looked"],
-    [/ seem?s(?=[ .])/g, "seemed"],
-    [/ sound?s(?=[ .])/g, "sounded"],
-    [/ taste?s(?=[ .])/g, "tasted"],
+    [/ looks?(?=[ .])/g, "looked"],
+    [/ seems?(?=[ .])/g, "seemed"],
+    [/ sounds?(?=[ .])/g, "sounded"],
+    [/ tastes?(?=[ .])/g, "tasted"],
 
     // Regular Verbs
     [/ inherits?(?=[ .])/g, "inherited"],
@@ -242,11 +244,13 @@ var verbs = [
 // The method should be executed using a string variable - the method does not accept arguments
 String.prototype.toPastTense = function () {
     var text = this;
+    text = text.replace(/ to /g, " to ####");
     verbs.forEach(function (element) {
-        var newText = element[1];
-        text = text.replace(element[0], " " + newText);
+        var patternText = element[0];
+        var newText = " ####" + element[1] + "####";
+        text = text.replace(patternText, newText);
     });
-    return text;
+    return text.replace(/####/g, "");
 };
 
 // Converts string to present tense
@@ -256,5 +260,9 @@ String.prototype.toPastParticiple = function () {
 };
 
 // Test
-var testText = "Here is my short story with present, present perfect, and present continuous tense. Would you please check my story and point out my mistakes. Thank you for being helpful to me. It is 9:00 A.M. in the morning and the first thing I am going to do is to knock on my door of my mother's room. She always sleeps till late. Today, she shouldn't sleep much as a special guest is coming to meet us in the evening and for she must get up. I normally wake-up at 7:00 A.M and then watch the morning show. After it I take shower and eat my breakfast. I don't like eating omelets in the breakfast, I prefer taking two slices of Dawn bread, one glass of milk, and one table spoon of peanut instead. It keeps me healthy, active, and smart. My sister has been sitting at the table for fifteen and waiting for me to make her breakfast, but I can't do it. I am not in the mood of doing anything for her. My sister has never prepared breakfast for herself; and I do not like it. She must know her responsibility and stop being dependent on me, because she is growing up now and she needs to learn how to do small things like this.";
-console.log(testText.toPastTense());
+window.onload = function () {
+    var testText = "Here is my short story with present, present perfect, and present continuous tense. Would you please check my story and point out my mistakes. Thank you for being helpful to me. It is 9:00 A.M. in the morning and the first thing I am going to do is to knock on my door of my mother's room. She always sleeps till late. Today, she shouldn't sleep much as a special guest is coming to meet us in the evening and for she must get up. I normally wake-up at 7:00 A.M and then watch the morning show. After it I take shower and eat my breakfast. I don't like eating omelets in the breakfast, I prefer taking two slices of Dawn bread, one glass of milk, and one table spoon of peanut instead. It keeps me healthy, active, and smart. My sister has been sitting at the table for fifteen and waiting for me to make her breakfast, but I can't do it. I am not in the mood of doing anything for her. My sister has never prepared breakfast for herself; and I do not like it. She must know her responsibility and stop being dependent on me, because she is growing up now and she needs to learn how to do small things like this.";
+    var tensifiedText = testText.toPastTense();
+    document.getElementById("test-input").value = testText;
+    document.getElementById("test-output").value = tensifiedText;
+};
